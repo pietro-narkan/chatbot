@@ -1,0 +1,58 @@
+{
+  "name": "Error - Chatbot NeoKodex",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "b7e1ad3b-26b3-4e30-9f8a-ee58c86b5987",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "8216883671",
+        "text": "⚠️ Error en Chatbot NeoKodex\n\nWorkflow: {{ $json.workflow.name }}\nNodo que falló: {{ $json.execution.error.node.name || 'desconocido' }}\nMensaje: {{ $json.execution.error.message }}\nExecution ID: {{ $json.execution.id }}\n\nRevisa en n8n: {{ $json.execution.url }}",
+        "additionalFields": {}
+      },
+      "id": "59ffbd7b-b1cf-4e10-8653-f306848259e4",
+      "name": "Notify Pietro of Error",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        560,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "PASTE_TELEGRAM_CRED_ID_HERE",
+          "name": "NeoKodex Bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Notify Pietro of Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "neokodex-chatbot"
+  }
+}

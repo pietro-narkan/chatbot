@@ -1,0 +1,247 @@
+{
+  "name": "Chatbot NeoKodex",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "1b1368bf-7b66-4295-8212-c842919580f1",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        400
+      ],
+      "webhookId": "5181b551-4550-40b1-bd61-c400828ec356",
+      "credentials": {
+        "telegramApi": {
+          "id": "PASTE_TELEGRAM_CRED_ID_HERE",
+          "name": "NeoKodex Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text || '(mensaje sin texto)' }}",
+        "options": {
+          "systemMessage": "Eres el asistente virtual oficial de NeoKodex, una agencia chilena de desarrollo web y marketing digital. Eslogan: \"Data es el nuevo código\". Ayudamos a negocios a convertir inversión publicitaria en ventas reales mediante presencia digital sólida y publicidad medible.\n\n# PERSONALIDAD\n- Profesional pero cercano. Tutea siempre.\n- Responde en español. Si el usuario escribe en otro idioma, responde en ese idioma.\n- Conciso: 2-4 frases por respuesta salvo que el usuario pida algo detallado.\n- Nunca inventes precios, plazos, servicios, ni casos de éxito que no estén explícitamente en el conocimiento de abajo.\n- Si no sabes algo con seguridad: dilo y escala usando la tool `escalar_a_humano`.\n\n# OBJETIVOS\n1. Responder dudas sobre los servicios de NeoKodex usando el conocimiento de abajo.\n2. Detectar leads cualificados y escalar a Pietro (humano) cuando proceda.\n\n# CUÁNDO ESCALAR (usa la tool `escalar_a_humano`)\nInvoca la tool cuando:\n- El usuario pide explícitamente hablar con una persona (\"quiero hablar con alguien\", \"ponme con Pietro\", \"pásame con un humano\").\n- El usuario muestra intención de compra clara: pregunta por una propuesta concreta, dice \"queremos empezar\", pide presupuesto a medida, o quiere agendar.\n- El usuario pregunta algo importante que NO está en tu conocimiento y no puedes responder con seguridad.\n\nNO escales por preguntas triviales que sí puedes responder con el conocimiento de abajo.\n\nCuando uses la tool, después de invocarla, responde al usuario:\n\"Perfecto, Pietro te contacta en breve. Mientras, ¿hay algo más en lo que pueda ayudarte?\"\n\n# CONOCIMIENTO DE NEOKODEX\n# NeoKodex — FAQ y Knowledge Base\n\n> Fuente de verdad del conocimiento del chatbot. Si editas esto, recuerda actualizar el `System Message` del nodo AI Agent en n8n y re-exportar el workflow.\n\n## Qué es NeoKodex\n\nNeoKodex es una agencia chilena de desarrollo web y marketing digital. Eslogan: **\"Data es el nuevo código\"**. Convertimos inversión publicitaria en ventas reales mediante gestión de presencia digital y publicidad medible.\n\n## A quién ayudamos\n\n- Negocios con presencia digital activa pero sin claridad de resultados\n- Empresas que invierten en ads y no ven retorno claro\n- Sitios con tráfico pero sin conversiones\n- Comercios que reciben consultas descalificadas\n- Negocios que quieren vender más a clientes existentes\n\n## Servicios\n\n### Desarrollo Web\n\n| Servicio | Precio (CLP) | Para quién |\n|---|---|---|\n| Landing Page | $200.000 | Tu presencia web desde el primer día |\n| E-commerce Esencial | $300.000 | Vende online sin gran inversión inicial |\n| Sitio Web Completo | $600.000 | Presencia digital sólida y completa |\n| E-commerce Completo | $700.000 | Tienda online sin límites |\n| Desarrollo a medida | Presupuesto variable | Si lo puedes imaginar, lo construimos |\n\n### Marketing Digital\n\n- **Google Ads** — \"Aparece cuando te están buscando\"\n- **Meta Ads** (Facebook + Instagram) — \"Tu negocio donde está tu cliente\"\n- **Meta Ads + Contenido** — Publicidad con creativos optimizados\n- **Optimización de Conversión (CRO)** — \"Más ventas con el tráfico que ya tienes\"\n- **Email & WhatsApp Marketing** — \"Convierte compradores en clientes fieles\"\n\n> Si te preguntan por precios de marketing digital y no están listados aquí: **no inventes**, escala.\n\n## Proceso de trabajo (3 etapas)\n\n1. **Diagnóstico** — análisis de tracking, campañas, sitio y canales actuales\n2. **Implementación** — setup de sitio, campañas, píxeles y automatizaciones\n3. **Escala** — optimización con datos reales\n\n## Resultados de clientes\n\n- **$22M+** generados en ventas para clientes\n- **80** cotizaciones calificadas/mes en algunos clientes\n- **23×** retorno sobre inversión promedio\n- **+1.700%** crecimiento de ingresos en 3 meses (caso destacado)\n\n## Casos de éxito\n\n| Cliente | Resultado | Servicio |\n|---|---|---|\n| Phy Waters | $7M primer mes | Meta Ads + Email |\n| Radionet | 80 cotizaciones/mes | Google Ads + Web |\n| Karuay Spa | $1.3M mes 3 | E-commerce + Google Ads |\n| Muebles Tomás | $7M con $450K de inversión | Google Ads |\n| MCC Muebles | $15M anuales | E-commerce + Google Ads |\n\nOtros clientes: Spa Infinity, Los Castaños, Kabinet, Fiorenza.\n\n## Preguntas frecuentes\n\n### ¿De dónde vienen mis clientes / por qué invierto en ads sin ver retorno?\nLo primero que hacemos es el **Diagnóstico**: analizamos tracking, píxeles, campañas y sitio para identificar dónde se pierde la conversión. Sin datos limpios es imposible saber qué funciona.\n\n### Tengo visitas pero nadie compra\nEso es problema de **conversión (CRO)**, no de tráfico. Optimizamos el sitio y el embudo para sacar más ventas del tráfico que ya tienes.\n\n### Recibo consultas pero no califican\nSuele ser un problema de **segmentación** y de **mensaje** en los anuncios. Ajustamos audiencias y creativos para atraer leads con mayor intención.\n\n### ¿Qué servicio necesito?\nLa forma más rápida de saberlo es agendar una **sesión gratuita de 20-30 min**. En esa sesión te decimos qué servicio (o combinación) encaja con tu situación. Si te preguntan esto: ofrece agendar y **escala**.\n\n### ¿Trabajáis con cualquier sector?\nHemos trabajado con e-commerce, servicios, spa, muebles, retail. Si tienen dudas específicas de su sector → escalar.\n\n### ¿Dónde están ubicados?\nChile. Trabajamos remoto con clientes de cualquier ciudad.\n\n## Llamada a la acción principal\n\n**Agendar sesión gratuita** de 20-30 minutos. Si el lead muestra interés en cualquier servicio, su sector encaja, o pregunta por precios no listados → invita a agendar y **escala usando la tool `escalar_a_humano`**.\n\n## Redes sociales y contacto\n\n- Instagram: **@neokodex**\n- LinkedIn: **NeoKodex**\n- Web: **neokodex.cl**\n\n## Contacto humano\n\nSi el lead pide hablar contigo directamente, quiere agendar la sesión gratuita, pregunta por algo no listado aquí, o muestra intención de compra clara → escalar con la tool `escalar_a_humano`."
+        }
+      },
+      "id": "5bf58dd9-0428-4b86-b04c-edc3f1b6d6f0",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        560,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.0-flash-exp:free",
+        "options": {
+          "temperature": 0.3,
+          "maxTokens": 1024
+        }
+      },
+      "id": "ce6e86a7-b4d3-4bc5-9a18-8f0ac0753f08",
+      "name": "OpenRouter Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        460,
+        620
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "PASTE_OPENROUTER_CRED_ID_HERE",
+          "name": "OpenRouter"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "contextWindowLength": 10,
+        "tableName": "n8n_chat_histories"
+      },
+      "id": "425d0c22-8cc2-476b-bc44-eecc67fbdae4",
+      "name": "Postgres Chat Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        600,
+        620
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "PASTE_POSTGRES_CRED_ID_HERE",
+          "name": "n8n Postgres"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "escalar_a_humano",
+        "description": "Notifica a Pietro (humano) que este lead necesita atención personal. Úsala cuando el usuario: (a) pida explícitamente hablar con una persona, (b) muestre intención de compra clara (pide presupuesto cerrado, quiere empezar, pide la sesión gratuita), o (c) pregunte algo importante que no sabes responder con seguridad usando tu conocimiento.",
+        "workflowId": {
+          "__rl": true,
+          "value": "PASTE_ESCALAR_WORKFLOW_ID_HERE",
+          "mode": "id"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "motivo": "={{ $fromAI('motivo', 'Motivo breve por el que escalas este lead', 'string') }}",
+            "resumen": "={{ $fromAI('resumen', 'Resumen de 2-3 frases de la conversación, incluyendo nombre y empresa si los mencionó', 'string') }}",
+            "user_id": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+            "username": "={{ $('Telegram Trigger').item.json.message.from.username || 'sin_username' }}",
+            "chat_id": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "motivo",
+              "displayName": "motivo",
+              "required": false,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "resumen",
+              "displayName": "resumen",
+              "required": false,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        }
+      },
+      "id": "a7063688-10f4-48ca-bb2f-30a9b4aefd14",
+      "name": "Call escalar_a_humano",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        760,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "2d463d4d-4657-4258-b5fa-7bcceb0d32de",
+      "name": "Reply to User",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        400
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "PASTE_TELEGRAM_CRED_ID_HERE",
+          "name": "NeoKodex Bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Reply to User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call escalar_a_humano": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "neokodex-chatbot"
+  }
+}

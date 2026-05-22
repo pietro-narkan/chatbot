@@ -1,0 +1,83 @@
+{
+  "name": "Tool - Escalar a Humano",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "motivo",
+              "type": "string"
+            },
+            {
+              "name": "resumen",
+              "type": "string"
+            },
+            {
+              "name": "user_id",
+              "type": "string"
+            },
+            {
+              "name": "username",
+              "type": "string"
+            },
+            {
+              "name": "chat_id",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "46ada939-d60a-4a31-981e-7cd7bd2f0d57",
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "8216883671",
+        "text": "🚨 Escalación de lead en NeoKodexBot\n\nUsuario: @{{ $json.username }} (id: {{ $json.user_id }})\nMotivo: {{ $json.motivo }}\n\nResumen:\n{{ $json.resumen }}\n\nAbrir chat: tg://user?id={{ $json.user_id }}",
+        "additionalFields": {}
+      },
+      "id": "218d628e-2d33-49d6-a451-fa06f9b01bee",
+      "name": "Notify Pietro",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        560,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "PASTE_TELEGRAM_CRED_ID_HERE",
+          "name": "NeoKodex Bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Notify Pietro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "neokodex-chatbot"
+  }
+}
