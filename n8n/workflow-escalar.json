@@ -28,7 +28,7 @@
           ]
         }
       },
-      "id": "385225bc-7fd4-44a1-ad23-e2e0a92e1f1f",
+      "id": "ba6481c9-2ed9-40f3-950c-8b923dd3bcae",
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
@@ -43,7 +43,7 @@
         "text": "=🚨 Escalación de lead en NeoKodexBot\n\nUsuario: @{{ $json.username }} (id: {{ $json.user_id }})\nMotivo: {{ $json.motivo }}\n\nResumen:\n{{ $json.resumen }}\n\nAbrir chat: tg://user?id={{ $json.user_id }}",
         "additionalFields": {}
       },
-      "id": "0ce3dc22-29b4-438b-ae18-1db3129972b9",
+      "id": "257f6724-82aa-4f2c-b601-eb926053427a",
       "name": "Notify Pietro",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,

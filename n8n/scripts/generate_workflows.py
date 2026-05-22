@@ -177,9 +177,9 @@ def build_main_workflow(system_message: str) -> dict:
                 "parameters": {
                     "model": {
                         "__rl": True,
-                        "value": "google/gemini-2.0-flash-exp:free",
+                        "value": "deepseek/deepseek-v4-flash:free",
                         "mode": "list",
-                        "cachedResultName": "google/gemini-2.0-flash-exp:free",
+                        "cachedResultName": "deepseek/deepseek-v4-flash:free",
                     },
                     "options": {
                         "temperature": 0.3,
