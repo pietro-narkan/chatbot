@@ -94,7 +94,7 @@ def build_escalar_workflow() -> dict:
                 "parameters": {
                     "chatId": PIETRO_CHAT_ID,
                     "text": (
-                        "🚨 Escalación de lead en NeoKodexBot\n\n"
+                        "=🚨 Escalación de lead en NeoKodexBot\n\n"
                         "Usuario: @{{ $json.username }} (id: {{ $json.user_id }})\n"
                         "Motivo: {{ $json.motivo }}\n\n"
                         "Resumen:\n{{ $json.resumen }}\n\n"
@@ -175,7 +175,12 @@ def build_main_workflow(system_message: str) -> dict:
             },
             {
                 "parameters": {
-                    "model": "google/gemini-2.0-flash-exp:free",
+                    "model": {
+                        "__rl": True,
+                        "value": "google/gemini-2.0-flash-exp:free",
+                        "mode": "list",
+                        "cachedResultName": "google/gemini-2.0-flash-exp:free",
+                    },
                     "options": {
                         "temperature": 0.3,
                         "maxTokens": 1024,
@@ -325,7 +330,7 @@ def build_error_workflow() -> dict:
                 "parameters": {
                     "chatId": PIETRO_CHAT_ID,
                     "text": (
-                        "⚠️ Error en Chatbot NeoKodex\n\n"
+                        "=⚠️ Error en Chatbot NeoKodex\n\n"
                         "Workflow: {{ $json.workflow.name }}\n"
                         "Nodo que falló: {{ $json.execution.error.node.name || 'desconocido' }}\n"
                         "Mensaje: {{ $json.execution.error.message }}\n"
