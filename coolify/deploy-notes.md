@@ -8,7 +8,7 @@
 
 ### 1. Crear un nuevo proyecto en Coolify
 1. Panel Coolify → **Projects** → **+ New Project**
-2. Nombre: `chatbot-narkan`
+2. Nombre: `chatbot-neokodex`
 3. Environment: `production`
 
 ### 2. Añadir n8n como servicio

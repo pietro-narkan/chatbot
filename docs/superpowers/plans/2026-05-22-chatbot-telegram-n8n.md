@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Deployar un chatbot de Telegram para Narkan que responde FAQs y escala leads cualificados a Pietro, usando n8n + OpenRouter en el VPS con Coolify ya instalado.
+**Goal:** Deployar un chatbot de Telegram para NeoKodex que responde FAQs y escala leads cualificados a Pietro, usando n8n + OpenRouter en el VPS con Coolify ya instalado.
 
 **Architecture:** Workflow de n8n con un AI Agent que llama a OpenRouter (modelo gratis), mantiene memoria por sesión en Postgres, y tiene una tool `escalar_a_humano` que notifica a Pietro por Telegram. Cero código custom; todo es configuración + un workflow JSON versionado.
 
@@ -25,7 +25,7 @@ Archivos que se crean a lo largo del plan:
 | `.env.example` | Plantilla de variables sin secretos | Claude Code (Task 1) |
 | `README.md` | Guía de deploy y mantenimiento end-to-end | Claude Code (Task 11) |
 | `CLAUDE.md` | Contexto para futuras sesiones de Claude Code | Claude Code (Task 11) |
-| `knowledge/narkan-faq.md` | FAQs de Narkan (fuente de verdad del KB) | Pietro escribe contenido, Claude Code andamia (Task 2) |
+| `knowledge/neokodex-faq.md` | FAQs de NeoKodex (fuente de verdad del KB) | Pietro escribe contenido, Claude Code andamia (Task 2) |
 | `n8n/system-prompt.md` | Template del system prompt | Claude Code (Task 7) |
 | `n8n/workflow-chatbot.json` | Workflow exportado de n8n | Pietro exporta, Claude Code guía (Task 10) |
 | `n8n/README.md` | Cómo importar/exportar el workflow | Claude Code (Task 10) |
@@ -96,19 +96,19 @@ git commit -m "chore: add gitignore and env template"
 
 ---
 
-### Task 2: Andamiar `knowledge/narkan-faq.md`
+### Task 2: Andamiar `knowledge/neokodex-faq.md`
 
 **Files:**
-- Create: `/home/pietro/Escritorio/chatbot/knowledge/narkan-faq.md`
+- Create: `/home/pietro/Escritorio/chatbot/knowledge/neokodex-faq.md`
 
 - [ ] **Step 2.1: Crear estructura del knowledge base** — *Claude Code*
 
 Contenido (Pietro luego rellena con info real):
 ```markdown
-# Narkan — FAQ y Knowledge Base
+# NeoKodex — FAQ y Knowledge Base
 
-## Qué es Narkan
-Narkan es una agencia especializada en Meta Ads (Facebook e Instagram) que ayuda a [PERFIL DEL CLIENTE IDEAL: e-commerce, infoproductos, servicios, etc.] a [RESULTADO: escalar ventas, conseguir leads cualificados, etc.] mediante [METODOLOGÍA: Andromeda 2026-2027, ángulos persona-oferta, etc.].
+## Qué es NeoKodex
+NeoKodex es una agencia especializada en Meta Ads (Facebook e Instagram) que ayuda a [PERFIL DEL CLIENTE IDEAL: e-commerce, infoproductos, servicios, etc.] a [RESULTADO: escalar ventas, conseguir leads cualificados, etc.] mediante [METODOLOGÍA: Andromeda 2026-2027, ángulos persona-oferta, etc.].
 
 ## Servicios
 ### [Nombre del servicio 1]
@@ -156,19 +156,19 @@ Si el lead quiere hablar contigo o necesita algo que no está aquí, el bot debe
 - [ ] **Step 2.2: Commit** — *Claude Code*
 
 ```bash
-git add knowledge/narkan-faq.md
-git commit -m "docs: scaffold narkan FAQ knowledge base"
+git add knowledge/neokodex-faq.md
+git commit -m "docs: scaffold NeoKodex FAQ knowledge base"
 ```
 
 - [ ] **Step 2.3: Rellenar contenido real** — *Manual (Pietro)*
 
-Pietro edita `knowledge/narkan-faq.md` con la info real de Narkan: servicios, precios reales (o "consultar"), casos, etc. **Importante:** si no quieres listar precios públicamente, deja `Precios: consultar — el bot debe escalar`. El system prompt lo respetará.
+Pietro edita `knowledge/neokodex-faq.md` con la info real de NeoKodex: servicios, precios reales (o "consultar"), casos, etc. **Importante:** si no quieres listar precios públicamente, deja `Precios: consultar — el bot debe escalar`. El system prompt lo respetará.
 
 - [ ] **Step 2.4: Commit del contenido real** — *Manual (Pietro)*
 
 ```bash
-git add knowledge/narkan-faq.md
-git commit -m "docs: add real Narkan FAQ content"
+git add knowledge/neokodex-faq.md
+git commit -m "docs: add real NeoKodex FAQ content"
 ```
 
 ---
@@ -192,7 +192,7 @@ Contenido:
 
 ### 1. Crear un nuevo proyecto en Coolify
 1. Panel Coolify → **Projects** → **+ New Project**
-2. Nombre: `chatbot-narkan`
+2. Nombre: `chatbot-neokodex`
 3. Environment: `production`
 
 ### 2. Añadir n8n como servicio
@@ -272,8 +272,8 @@ Confirmar que entras al panel de n8n con un usuario admin. Anota la URL pública
 
 1. Abre Telegram → busca `@BotFather`
 2. `/newbot`
-3. Nombre visible: `Narkan Asistente` (o el que prefieras)
-4. Username: `narkan_assistant_bot` (debe terminar en `bot` y ser único)
+3. Nombre visible: `NeoKodex Asistente` (o el que prefieras)
+4. Username: `neokodex_assistant_bot` (debe terminar en `bot` y ser único)
 5. BotFather te devuelve un token tipo `1234567890:AAH...`
 
 **Guarda el token en un sitio seguro temporalmente** (lo metes en n8n en Task 5).
@@ -281,9 +281,9 @@ Confirmar que entras al panel de n8n con un usuario admin. Anota la URL pública
 - [ ] **Step 4.2: Configurar el bot (opcional pero recomendado)** — *Manual (Pietro)*
 
 Con BotFather:
-- `/setdescription` → "Asistente virtual de Narkan. Pregúntame por nuestros servicios de Meta Ads."
+- `/setdescription` → "Asistente virtual de NeoKodex. Pregúntame por nuestros servicios de Meta Ads."
 - `/setabouttext` → texto corto que aparece en el perfil
-- `/setuserpic` → logo de Narkan
+- `/setuserpic` → logo de NeoKodex
 - `/setcommands` → 
   ```
   start - Iniciar conversación
@@ -300,7 +300,7 @@ Con BotFather:
 
 - [ ] **Step 4.4: Iniciar una conversación con tu bot** — *Manual (Pietro)*
 
-1. Busca tu bot por su username (`@narkan_assistant_bot` o el que pusiste)
+1. Busca tu bot por su username (`@neokodex_assistant_bot` o el que pusiste)
 2. Click **Start** o envía `/start`
 3. **Importante:** esto registra que tu chat existe; sin esto el bot no te puede mandar mensajes de escalación.
 
@@ -312,7 +312,7 @@ Con BotFather:
 
 1. Ve a https://openrouter.ai → Sign up (con Google o email)
 2. Settings → **Keys** → **Create Key**
-3. Nombre: `narkan-chatbot-prod`
+3. Nombre: `neokodex-chatbot-prod`
 4. Copia la key (`sk-or-v1-...`)
 
 - [ ] **Step 5.2: Verificar que los modelos free están disponibles** — *Manual (Pietro)*
@@ -339,14 +339,14 @@ cp /home/pietro/Escritorio/chatbot/.env.example /home/pietro/Escritorio/chatbot/
 - [ ] **Step 6.1: Crear el workflow** — *Manual (Pietro)*
 
 1. Panel n8n → **Workflows** → **+ Add workflow**
-2. Nombre: `Chatbot Narkan`
+2. Nombre: `Chatbot NeoKodex`
 
 - [ ] **Step 6.2: Añadir Telegram Trigger** — *Manual (Pietro)*
 
 1. Click **+** → buscar `Telegram Trigger`
 2. **Trigger On:** `Message`
 3. **Credential:** crear nueva
-   - Name: `Narkan Bot`
+   - Name: `NeoKodex Bot`
    - Access Token: pegar `TELEGRAM_BOT_TOKEN`
    - Save
 4. **Save** el nodo
@@ -373,7 +373,7 @@ cp /home/pietro/Escritorio/chatbot/.env.example /home/pietro/Escritorio/chatbot/
 2. **Operation:** `Send Message`
 3. **Chat ID:** `={{ $json.message.chat.id }}`
 4. **Text:** `Recibido: {{ $json.message.text }}`
-5. **Credential:** la misma `Narkan Bot`
+5. **Credential:** la misma `NeoKodex Bot`
 6. Save
 
 - [ ] **Step 6.6: Test end-to-end del echo** — *Manual (Pietro)*
@@ -395,14 +395,14 @@ cp /home/pietro/Escritorio/chatbot/.env.example /home/pietro/Escritorio/chatbot/
 
 Contenido:
 ````markdown
-# System Prompt — Chatbot Narkan
+# System Prompt — Chatbot NeoKodex
 
-Este es el system prompt que se inyecta en el AI Agent de n8n. La sección `## CONOCIMIENTO DE NARKAN` se reemplaza por el contenido íntegro de `knowledge/narkan-faq.md` antes de pegarlo en n8n.
+Este es el system prompt que se inyecta en el AI Agent de n8n. La sección `## CONOCIMIENTO DE NEOKODEX` se reemplaza por el contenido íntegro de `knowledge/neokodex-faq.md` antes de pegarlo en n8n.
 
 ---
 
 ```
-Eres el asistente virtual oficial de Narkan, una agencia especializada en Meta Ads (Facebook e Instagram) basada en España.
+Eres el asistente virtual oficial de NeoKodex, una agencia especializada en Meta Ads (Facebook e Instagram) basada en España.
 
 # PERSONALIDAD
 - Profesional pero cercano. Tutea siempre.
@@ -412,7 +412,7 @@ Eres el asistente virtual oficial de Narkan, una agencia especializada en Meta A
 - Si no sabes algo con seguridad: dilo y escala usando la tool `escalar_a_humano`.
 
 # OBJETIVOS
-1. Responder dudas sobre los servicios de Narkan usando el conocimiento de abajo.
+1. Responder dudas sobre los servicios de NeoKodex usando el conocimiento de abajo.
 2. Detectar leads cualificados y escalar a Pietro (humano) cuando proceda.
 
 # CUÁNDO ESCALAR (usa la tool `escalar_a_humano`)
@@ -426,8 +426,8 @@ NO escales por preguntas triviales que sí puedes responder con el conocimiento 
 Cuando uses la tool, después de invocarla, responde al usuario:
 "Perfecto, Pietro te contacta en breve. Mientras, ¿hay algo más en lo que pueda ayudarte?"
 
-# CONOCIMIENTO DE NARKAN
-{{ AQUÍ_VA_EL_CONTENIDO_DE_narkan-faq.md }}
+# CONOCIMIENTO DE NEOKODEX
+{{ AQUÍ_VA_EL_CONTENIDO_DE_neokodex-faq.md }}
 ```
 ````
 
@@ -486,7 +486,7 @@ n8n viene con Postgres en el mismo stack de Coolify. Vamos a reutilizarlo para g
 1. **Agent:** `Conversational Agent`
 2. **Prompt Type:** `Define below`
 3. **Text:** `={{ $json.message.text }}`
-4. **System Message:** pegar el system prompt completo de `n8n/system-prompt.md`, reemplazando `{{ AQUÍ_VA_EL_CONTENIDO_DE_narkan-faq.md }}` con el contenido íntegro de `knowledge/narkan-faq.md`.
+4. **System Message:** pegar el system prompt completo de `n8n/system-prompt.md`, reemplazando `{{ AQUÍ_VA_EL_CONTENIDO_DE_neokodex-faq.md }}` con el contenido íntegro de `knowledge/neokodex-faq.md`.
 
 - [ ] **Step 8.6: Añadir Send Message de respuesta** — *Manual (Pietro)*
 
@@ -494,7 +494,7 @@ n8n viene con Postgres en el mismo stack de Coolify. Vamos a reutilizarlo para g
 2. **Operation:** `Send Message`
 3. **Chat ID:** `={{ $('Telegram Trigger').item.json.message.chat.id }}`
 4. **Text:** `={{ $json.output }}`
-5. Credential: `Narkan Bot`
+5. Credential: `NeoKodex Bot`
 
 - [ ] **Step 8.7: Test end-to-end del FAQ** — *Manual (Pietro)*
 
@@ -561,12 +561,12 @@ En el sub-workflow:
    Abrir chat: tg://user?id={{ $json.user_id }}
    ```
    (Quita los emojis si prefieres.)
-5. Credential: `Narkan Bot`
+5. Credential: `NeoKodex Bot`
 6. Save y **Active**
 
 - [ ] **Step 9.4: Conectar la tool al AI Agent del workflow principal** — *Manual (Pietro)*
 
-1. Volver al workflow `Chatbot Narkan`
+1. Volver al workflow `Chatbot NeoKodex`
 2. AI Agent → slot **Tool** → `Call n8n Workflow Tool`
 3. **Workflow:** seleccionar `Tool — Escalar a Humano`
 4. **Tool Name:** `escalar_a_humano`
@@ -600,13 +600,13 @@ Esperado:
 
 Estrategia MVP: el error workflow solo notifica a Pietro. NO intenta responder al usuario (extraer su `chat_id` desde el contexto del error es complejo y poco fiable). Si una conversación rompe, Pietro lo ve en su Telegram y puede contactar al lead manualmente desde n8n.
 
-1. n8n → **Workflows** → **+ Add workflow** → nombre: `Error — Chatbot Narkan`
+1. n8n → **Workflows** → **+ Add workflow** → nombre: `Error — Chatbot NeoKodex`
 2. Añadir nodo `Error Trigger`
 3. Añadir nodo `Telegram` → Send Message con:
    - **Chat ID:** el valor numérico de `TELEGRAM_OWNER_CHAT_ID` (hardcoded, ej: `123456789`)
    - **Text:**
      ```
-     ⚠️ Error en Chatbot Narkan
+     ⚠️ Error en Chatbot NeoKodex
 
      Workflow: {{ $json.workflow.name }}
      Nodo que falló: {{ $json.execution.error.node.name }}
@@ -615,9 +615,9 @@ Estrategia MVP: el error workflow solo notifica a Pietro. NO intenta responder a
 
      Revisa en n8n: {{ $json.execution.url }}
      ```
-   - **Credential:** `Narkan Bot`
+   - **Credential:** `NeoKodex Bot`
 4. Save y **Active**
-5. En el workflow principal: **Settings** (engranaje arriba) → **Error Workflow** → seleccionar `Error — Chatbot Narkan` → Save
+5. En el workflow principal: **Settings** (engranaje arriba) → **Error Workflow** → seleccionar `Error — Chatbot NeoKodex` → Save
 
 - [ ] **Step 10.2: Añadir fallback de modelo en el workflow principal** — *Manual (Pietro)*
 
@@ -669,7 +669,7 @@ Debe responder en los 3 casos con el mensaje de "solo proceso texto".
 
 - [ ] **Step 12.1: Exportar el workflow principal** — *Manual (Pietro)*
 
-1. n8n → workflow `Chatbot Narkan` → menú `...` → **Download**
+1. n8n → workflow `Chatbot NeoKodex` → menú `...` → **Download**
 2. Guardar como `/home/pietro/Escritorio/chatbot/n8n/workflow-chatbot.json`
 
 - [ ] **Step 12.2: Exportar el sub-workflow de escalación** — *Manual (Pietro)*
@@ -679,7 +679,7 @@ Debe responder en los 3 casos con el mensaje de "solo proceso texto".
 
 - [ ] **Step 12.3: Exportar el error workflow** — *Manual (Pietro)*
 
-1. n8n → workflow `Error — Chatbot Narkan` → **Download**
+1. n8n → workflow `Error — Chatbot NeoKodex` → **Download**
 2. Guardar como `/home/pietro/Escritorio/chatbot/n8n/workflow-error.json`
 
 - [ ] **Step 12.4: Crear `n8n/README.md`** — *Claude Code*
@@ -701,15 +701,15 @@ Contenido:
    2. `workflow-error.json`
    3. `workflow-chatbot.json`
 3. Conectar credenciales:
-   - `Narkan Bot` (Telegram Bot Token)
+   - `NeoKodex Bot` (Telegram Bot Token)
    - `OpenRouter` (API key + Base URL `https://openrouter.ai/api/v1`)
    - `Postgres` (auto-detecta el de Coolify si está en la misma red)
-4. En el workflow principal: configurar **Error Workflow** = `Error — Chatbot Narkan`
+4. En el workflow principal: configurar **Error Workflow** = `Error — Chatbot NeoKodex`
 5. Activar `workflow-escalar` y `workflow-chatbot`
 
 ## Editar el system prompt / knowledge base
-1. Editar `../knowledge/narkan-faq.md` (fuente de verdad)
-2. Editar el AI Agent del workflow principal: pegar el contenido actualizado del FAQ en la sección `# CONOCIMIENTO DE NARKAN` del system message
+1. Editar `../knowledge/neokodex-faq.md` (fuente de verdad)
+2. Editar el AI Agent del workflow principal: pegar el contenido actualizado del FAQ en la sección `# CONOCIMIENTO DE NEOKODEX` del system message
 3. Save workflow → re-exportar a `workflow-chatbot.json`
 4. Commitear
 
@@ -723,9 +723,9 @@ Contenido:
 
 Contenido:
 ````markdown
-# Chatbot Narkan (Telegram + n8n + OpenRouter)
+# Chatbot NeoKodex (Telegram + n8n + OpenRouter)
 
-Chatbot de Telegram para la agencia Narkan que responde FAQs sobre servicios de Meta Ads y escala leads cualificados a Pietro por Telegram.
+Chatbot de Telegram para la agencia NeoKodex que responde FAQs sobre servicios de Meta Ads y escala leads cualificados a Pietro por Telegram.
 
 ## Stack
 - **Telegram Bot API** — frontend
@@ -742,7 +742,7 @@ Sigue en orden:
 5. Testing manual (ver Test plan más abajo)
 
 ## Mantenimiento
-- **Cambiar FAQs:** editar `knowledge/narkan-faq.md` → actualizar system prompt en n8n → re-exportar workflow → commit
+- **Cambiar FAQs:** editar `knowledge/neokodex-faq.md` → actualizar system prompt en n8n → re-exportar workflow → commit
 - **Cambiar de modelo:** AI Agent node → cambiar `Model` (probar primero con un mensaje)
 - **Cambiar a quién escala:** sub-workflow `Tool — Escalar a Humano` → cambiar Chat ID
 
@@ -759,7 +759,7 @@ chatbot/
 ├── README.md                  # este archivo
 ├── CLAUDE.md                  # contexto para Claude Code
 ├── .env.example
-├── knowledge/narkan-faq.md    # FAQ editable
+├── knowledge/neokodex-faq.md    # FAQ editable
 ├── n8n/                       # workflows exportados + system prompt
 ├── coolify/deploy-notes.md
 └── docs/superpowers/          # spec + plan de implementación
@@ -788,17 +788,17 @@ Contenido:
 # Contexto del proyecto para Claude Code
 
 ## Qué es esto
-Chatbot de Telegram para la agencia Narkan (Pietro). Stack: n8n self-hosted en Coolify + OpenRouter (modelo gratis) + Telegram Bot API. Documentado en `README.md`.
+Chatbot de Telegram para la agencia NeoKodex (Pietro). Stack: n8n self-hosted en Coolify + OpenRouter (modelo gratis) + Telegram Bot API. Documentado en `README.md`.
 
 ## Cómo está organizado
-- `knowledge/narkan-faq.md` — fuente de verdad del knowledge base. Si Pietro pide cambiar lo que sabe el bot, editar aquí primero, después el system prompt en n8n, después re-exportar el workflow.
+- `knowledge/neokodex-faq.md` — fuente de verdad del knowledge base. Si Pietro pide cambiar lo que sabe el bot, editar aquí primero, después el system prompt en n8n, después re-exportar el workflow.
 - `n8n/*.json` — workflows exportados desde n8n. Son la fuente de verdad versionada.
-- `n8n/system-prompt.md` — template del prompt. La sección `CONOCIMIENTO DE NARKAN` se rellena con el contenido de `knowledge/narkan-faq.md`.
+- `n8n/system-prompt.md` — template del prompt. La sección `CONOCIMIENTO DE NEOKODEX` se rellena con el contenido de `knowledge/neokodex-faq.md`.
 - `coolify/deploy-notes.md` — cómo se deployó n8n en Coolify (referencia).
 - `docs/superpowers/specs/` y `docs/superpowers/plans/` — diseño y plan de la implementación inicial.
 
 ## Trabajo típico
-- "Cambia las FAQs" → editar `knowledge/narkan-faq.md`, recordar a Pietro actualizar el system prompt en n8n y re-exportar el JSON.
+- "Cambia las FAQs" → editar `knowledge/neokodex-faq.md`, recordar a Pietro actualizar el system prompt en n8n y re-exportar el JSON.
 - "Añade una nueva tool al agente" → diseñar como sub-workflow en n8n, exportar JSON, documentar en `n8n/README.md`.
 - "El bot no responde algo bien" → revisar system prompt + contenido del FAQ. Si falta info: añadirla al FAQ. Si es problema de prompting: ajustar el system prompt.
 
@@ -828,7 +828,7 @@ git commit -m "feat: export n8n workflows and add project docs"
 
 Mandar al bot:
 - `Hola` → debe saludar
-- `¿Qué hacéis en Narkan?` → debe responder con info del FAQ
+- `¿Qué hacéis en NeoKodex?` → debe responder con info del FAQ
 - `¿Trabajáis con ecommerce?` → debe responder con info del FAQ
 
 Resultado esperado: respuestas coherentes, en español, basadas en el FAQ.
@@ -895,7 +895,7 @@ Verificar que están commiteados:
 - Analytics de conversaciones (cuántos escalan, qué preguntas se repiten)
 - Voice notes con Whisper STT
 - Fallback automático de modelo (Gemini → DeepSeek → mensaje técnico)
-- Script que genera el system prompt automáticamente desde `narkan-faq.md`
+- Script que genera el system prompt automáticamente desde `neokodex-faq.md`
 
 ---
 

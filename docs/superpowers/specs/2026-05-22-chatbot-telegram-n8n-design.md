@@ -1,16 +1,16 @@
-# Chatbot de Telegram para Narkan — Diseño
+# Chatbot de Telegram para NeoKodex — Diseño
 
 **Fecha:** 2026-05-22
 **Estado:** Diseño aprobado, pendiente de plan de implementación
-**Autor:** Pietro (Narkan) + Claude Code
+**Autor:** Pietro (NeoKodex) + Claude Code
 
 ---
 
 ## 1. Objetivo
 
-Construir un chatbot de Telegram para la agencia Narkan que:
+Construir un chatbot de Telegram para la agencia NeoKodex que:
 
-1. Responde FAQs sobre los servicios de Meta Ads de Narkan en español.
+1. Responde FAQs sobre los servicios de Meta Ads de NeoKodex en español.
 2. Escala a humano (Pietro) cuando detecta intención de compra, petición explícita de contacto, o no puede responder.
 
 **Restricciones:**
@@ -66,7 +66,7 @@ n8n (Coolify, VPS 187.77.246.43)
 1. Usuario envía mensaje al bot en Telegram.
 2. Telegram dispara webhook a `https://n8n.<dominio>/webhook/telegram-bot`.
 3. n8n recupera historial reciente de Postgres (últimos N=10 mensajes del mismo `chat_id`).
-4. AI Agent llama a OpenRouter con: `system_prompt` (FAQs Narkan) + `history` + `user_message`.
+4. AI Agent llama a OpenRouter con: `system_prompt` (FAQs NeoKodex) + `history` + `user_message`.
 5. n8n guarda el par mensaje/respuesta en Postgres.
 6. n8n envía respuesta al usuario por Telegram.
 
@@ -100,14 +100,14 @@ Al invocarse la tool:
 
 ## 4. Knowledge base
 
-**Ubicación:** `knowledge/narkan-faq.md` en el repo local.
+**Ubicación:** `knowledge/neokodex-faq.md` en el repo local.
 
 **Formato:** Markdown estructurado en secciones (Servicios, Precios, Proceso, Casos, Contacto, etc.).
 
 **Cómo se aplica:** El contenido se incrusta directamente en el campo `system_prompt` del nodo AI Agent dentro del workflow de n8n. El template vive en `n8n/system-prompt.md` y el resultado final (template + FAQ concatenados) se pega en el workflow al exportarlo.
 
 **Edición (proceso explícito):**
-1. Pietro edita `knowledge/narkan-faq.md` en local.
+1. Pietro edita `knowledge/neokodex-faq.md` en local.
 2. Pietro abre n8n, edita el system prompt del nodo AI Agent (copia/pega el FAQ actualizado).
 3. Pietro exporta el workflow a `n8n/workflow-chatbot.json` y commitea.
 
@@ -120,7 +120,7 @@ Este proceso manual es aceptable para MVP. Si la edición se hace frecuente, aut
 ## 5. System prompt (esqueleto)
 
 ```
-Eres el asistente virtual de Narkan, agencia especializada en Meta Ads
+Eres el asistente virtual de NeoKodex, agencia especializada en Meta Ads
 (Facebook e Instagram) basada en España.
 
 PERSONALIDAD:
@@ -130,7 +130,7 @@ PERSONALIDAD:
 - Nunca inventes precios, plazos ni servicios que no estén en el knowledge base.
 
 OBJETIVO:
-- Responder dudas sobre los servicios de Narkan.
+- Responder dudas sobre los servicios de NeoKodex.
 - Detectar leads cualificados y escalar a Pietro (humano).
 
 CUÁNDO ESCALAR (usa la tool escalar_a_humano):
@@ -138,8 +138,8 @@ CUÁNDO ESCALAR (usa la tool escalar_a_humano):
 - El usuario muestra intención de compra clara.
 - El usuario te pregunta algo importante que no sabes responder con seguridad.
 
-CONOCIMIENTO DE NARKAN:
-{{contenido de knowledge/narkan-faq.md}}
+CONOCIMIENTO DE NEOKODEX:
+{{contenido de knowledge/neokodex-faq.md}}
 ```
 
 ---
@@ -172,7 +172,7 @@ Necesarios en n8n (Settings → Credentials o variables):
 ├── .gitignore                         # Ignora .env, node_modules, etc.
 │
 ├── knowledge/
-│   └── narkan-faq.md                  # FAQs editables (fuente de verdad del KB)
+│   └── neokodex-faq.md                  # FAQs editables (fuente de verdad del KB)
 │
 ├── n8n/
 │   ├── workflow-chatbot.json          # Workflow exportado (versionado en git)

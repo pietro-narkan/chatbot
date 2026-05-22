@@ -1,6 +1,6 @@
-# Chatbot Narkan (Telegram + n8n + OpenRouter)
+# Chatbot NeoKodex (Telegram + n8n + OpenRouter)
 
-Chatbot de Telegram para la agencia Narkan que responde FAQs sobre servicios de Meta Ads y escala leads cualificados a Pietro por Telegram.
+Chatbot de Telegram para la agencia chilena NeoKodex (desarrollo web + marketing digital) que responde FAQs sobre servicios y escala leads cualificados a Pietro por Telegram.
 
 ## Stack
 
@@ -21,7 +21,7 @@ Sigue en orden:
 
 ## Mantenimiento
 
-- **Cambiar FAQs:** editar `knowledge/narkan-faq.md` → actualizar System Message del AI Agent en n8n → re-exportar workflow → commit
+- **Cambiar FAQs:** editar `knowledge/neokodex-faq.md` → actualizar System Message del AI Agent en n8n → re-exportar workflow → commit
 - **Cambiar de modelo:** AI Agent node → cambiar `Model` (probar primero con un mensaje)
 - **Cambiar a quién escala:** sub-workflow `Tool — Escalar a Humano` → cambiar Chat ID
 
@@ -40,7 +40,7 @@ chatbot/
 ├── README.md                  # este archivo
 ├── CLAUDE.md                  # contexto para Claude Code
 ├── .env.example
-├── knowledge/narkan-faq.md    # FAQ editable
+├── knowledge/neokodex-faq.md    # FAQ editable
 ├── n8n/                       # workflows exportados + system prompt
 ├── coolify/deploy-notes.md
 └── docs/superpowers/          # spec + plan de implementación

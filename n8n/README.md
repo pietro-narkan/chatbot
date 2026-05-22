@@ -15,16 +15,16 @@
    2. `workflow-error.json`
    3. `workflow-chatbot.json`
 3. Conectar credenciales (todas se crean al importar):
-   - `Narkan Bot` — Telegram Bot Token
+   - `NeoKodex Bot` — Telegram Bot Token
    - `OpenRouter` — API key + Base URL `https://openrouter.ai/api/v1`
    - `Postgres` — auto-detecta el de Coolify si está en la misma red
-4. En el workflow principal: **Settings** → **Error Workflow** = `Error — Chatbot Narkan`
+4. En el workflow principal: **Settings** → **Error Workflow** = `Error — Chatbot NeoKodex`
 5. Activar `workflow-escalar` y `workflow-chatbot`
 
 ## Editar el system prompt / knowledge base
 
-1. Editar `../knowledge/narkan-faq.md` (fuente de verdad)
-2. Abrir el AI Agent del workflow principal en n8n → pegar el contenido actualizado del FAQ en la sección `# CONOCIMIENTO DE NARKAN` del System Message
+1. Editar `../knowledge/neokodex-faq.md` (fuente de verdad)
+2. Abrir el AI Agent del workflow principal en n8n → pegar el contenido actualizado del FAQ en la sección `# CONOCIMIENTO DE NEOKODEX` del System Message
 3. Save workflow → re-exportar a `workflow-chatbot.json`
 4. Commitear
 
