@@ -12,3 +12,6 @@
 
 # Backups de n8n
 *.bak
+
+# Claude Code (preferencias personales del proyecto)
+.claude/settings.local.json

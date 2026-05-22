@@ -1,0 +1,72 @@
+services:
+  n8n-postgres:
+    image: postgres:16-alpine
+    container_name: chatbot-n8n-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: n8n
+      POSTGRES_USER: n8n
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - n8n-postgres-data:/var/lib/postgresql/data
+    networks:
+      - n8n-internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U n8n -d n8n"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: chatbot-n8n
+    restart: unless-stopped
+    depends_on:
+      n8n-postgres:
+        condition: service_healthy
+    environment:
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: n8n-postgres
+      DB_POSTGRESDB_PORT: 5432
+      DB_POSTGRESDB_DATABASE: n8n
+      DB_POSTGRESDB_USER: n8n
+      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
+      N8N_HOST: ${N8N_DOMAIN}
+      N8N_PROTOCOL: https
+      N8N_PORT: 5678
+      WEBHOOK_URL: https://${N8N_DOMAIN}/
+      GENERIC_TIMEZONE: America/Santiago
+      N8N_DEFAULT_LOCALE: es
+      N8N_RUNNERS_ENABLED: "true"
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: "false"
+      N8N_SECURE_COOKIE: "true"
+    volumes:
+      - n8n-data:/home/node/.n8n
+    networks:
+      - n8n-internal
+      - coolify
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=coolify
+      # HTTPS router
+      - traefik.http.routers.n8n-chatbot.rule=Host(`${N8N_DOMAIN}`)
+      - traefik.http.routers.n8n-chatbot.entrypoints=https
+      - traefik.http.routers.n8n-chatbot.tls=true
+      - traefik.http.routers.n8n-chatbot.tls.certresolver=letsencrypt
+      - traefik.http.services.n8n-chatbot.loadbalancer.server.port=5678
+      # HTTP → HTTPS redirect
+      - traefik.http.routers.n8n-chatbot-http.rule=Host(`${N8N_DOMAIN}`)
+      - traefik.http.routers.n8n-chatbot-http.entrypoints=http
+      - traefik.http.routers.n8n-chatbot-http.middlewares=n8n-chatbot-https-redirect
+      - traefik.http.middlewares.n8n-chatbot-https-redirect.redirectscheme.scheme=https
+
+networks:
+  coolify:
+    external: true
+  n8n-internal:
+    driver: bridge
+
+volumes:
+  n8n-data:
+  n8n-postgres-data:
