@@ -1,0 +1,14 @@
+# Secretos
+.env
+.env.local
+*.key
+*.pem
+
+# Editores y SO
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Backups de n8n
+*.bak
