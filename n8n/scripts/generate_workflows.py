@@ -177,9 +177,9 @@ def build_main_workflow(system_message: str) -> dict:
                 "parameters": {
                     "model": {
                         "__rl": True,
-                        "value": "deepseek/deepseek-v4-flash:free",
+                        "value": "openai/gpt-oss-120b:free",
                         "mode": "list",
-                        "cachedResultName": "deepseek/deepseek-v4-flash:free",
+                        "cachedResultName": "openai/gpt-oss-120b:free",
                     },
                     "options": {
                         "temperature": 0.3,
