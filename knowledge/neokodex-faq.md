@@ -83,7 +83,7 @@ Chile. Trabajamos remoto con clientes de cualquier ciudad.
 
 ## Llamada a la acción principal
 
-**Agendar sesión gratuita** de 20-30 minutos. Si el lead muestra interés en cualquier servicio, su sector encaja, o pregunta por precios no listados → invita a agendar y **escala usando la tool `escalar_a_humano`**.
+**Agendar sesión gratuita** de 20-30 minutos. Si el lead muestra interés en cualquier servicio, su sector encaja, o pregunta por precios no listados → invita a agendar y **escala usando la tool `escalate_to_human`**.
 
 ## Redes sociales y contacto
 
@@ -93,4 +93,4 @@ Chile. Trabajamos remoto con clientes de cualquier ciudad.
 
 ## Contacto humano
 
-Si el lead pide hablar contigo directamente, quiere agendar la sesión gratuita, pregunta por algo no listado aquí, o muestra intención de compra clara → escalar con la tool `escalar_a_humano`.
+Si el lead pide hablar contigo directamente, quiere agendar la sesión gratuita, pregunta por algo no listado aquí, o muestra intención de compra clara → escalar con la tool `escalate_to_human`.

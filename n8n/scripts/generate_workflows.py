@@ -239,7 +239,7 @@ def build_main_workflow(system_message: str) -> dict:
             },
             {
                 "parameters": {
-                    "name": "escalar_a_humano",
+                    "name": "escalate_to_human",
                     "description": (
                         "Notifica a Pietro (humano) que este lead necesita atención personal. "
                         "Úsala cuando el usuario: (a) pida explícitamente hablar con una persona, "
@@ -274,7 +274,7 @@ def build_main_workflow(system_message: str) -> dict:
                     },
                 },
                 "id": tool_id,
-                "name": "Call escalar_a_humano",
+                "name": "Call escalate_to_human",
                 "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
                 "typeVersion": 2.2,
                 "position": [760, 620],
@@ -317,7 +317,7 @@ def build_main_workflow(system_message: str) -> dict:
                     [{"node": "AI Agent", "type": "ai_memory", "index": 0}]
                 ]
             },
-            "Call escalar_a_humano": {
+            "Call escalate_to_human": {
                 "ai_tool": [
                     [{"node": "AI Agent", "type": "ai_tool", "index": 0}]
                 ]

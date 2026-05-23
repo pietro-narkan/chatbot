@@ -28,7 +28,7 @@
           ]
         }
       },
-      "id": "5e47bfd8-144d-456c-8f8b-0402c428ea92",
+      "id": "d6298f68-fa1b-42c6-be41-cb2aae1765c5",
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
@@ -45,7 +45,7 @@
           "appendAttribution": false
         }
       },
-      "id": "2e2687f9-2db7-495d-9bfb-94cad6972bd4",
+      "id": "66d326dd-b33d-458c-80ac-fdf84fb0ab3e",
       "name": "Notify Pietro",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
@@ -66,7 +66,7 @@
         "jsonOutput": "{\"status\": \"ok\", \"message\": \"Notificación enviada a Pietro. NO vuelvas a llamar esta tool.\"}",
         "options": {}
       },
-      "id": "72c0d737-89a1-4057-9fa5-8fec11436758",
+      "id": "35975867-db8c-49f4-b50f-98432f35ce8d",
       "name": "Return OK",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
