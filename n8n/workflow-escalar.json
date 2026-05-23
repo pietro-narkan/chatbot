@@ -28,7 +28,7 @@
           ]
         }
       },
-      "id": "d6298f68-fa1b-42c6-be41-cb2aae1765c5",
+      "id": "8f5d07b8-a7aa-4f62-8f42-525e4993f5a3",
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
@@ -42,10 +42,11 @@
         "chatId": "8216883671",
         "text": "=🚨 Escalación de lead en NeoKodexBot\n\nUsuario: @{{ $('When Executed by Another Workflow').item.json.username }} (id: {{ $('When Executed by Another Workflow').item.json.user_id }})\nMotivo: {{ $('When Executed by Another Workflow').item.json.motivo }}\n\nResumen:\n{{ $('When Executed by Another Workflow').item.json.resumen }}\n\nAbrir chat: tg://user?id={{ $('When Executed by Another Workflow').item.json.user_id }}",
         "additionalFields": {
-          "appendAttribution": false
+          "appendAttribution": false,
+          "parse_mode": ""
         }
       },
-      "id": "66d326dd-b33d-458c-80ac-fdf84fb0ab3e",
+      "id": "70a277d1-5bfd-421a-bc09-c692b80badf2",
       "name": "Notify Pietro",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
@@ -66,7 +67,7 @@
         "jsonOutput": "{\"status\": \"ok\", \"message\": \"Notificación enviada a Pietro. NO vuelvas a llamar esta tool.\"}",
         "options": {}
       },
-      "id": "35975867-db8c-49f4-b50f-98432f35ce8d",
+      "id": "4c5965e5-7274-4f5c-b607-657089f5da2d",
       "name": "Return OK",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,

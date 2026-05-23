@@ -102,7 +102,7 @@ def build_escalar_workflow() -> dict:
                         "Resumen:\n{{ $('When Executed by Another Workflow').item.json.resumen }}\n\n"
                         "Abrir chat: tg://user?id={{ $('When Executed by Another Workflow').item.json.user_id }}"
                     ),
-                    "additionalFields": {"appendAttribution": False},
+                    "additionalFields": {"appendAttribution": False, "parse_mode": ""},
                 },
                 "id": notify_id,
                 "name": "Notify Pietro",
@@ -285,6 +285,7 @@ def build_main_workflow(system_message: str) -> dict:
                     "text": "={{ $json.output }}",
                     "additionalFields": {
                         "appendAttribution": False,
+                        "parse_mode": "",
                     },
                 },
                 "id": send_id,
@@ -357,7 +358,7 @@ def build_error_workflow() -> dict:
                         "Execution ID: {{ $json.execution.id }}\n\n"
                         "Revisa en n8n: {{ $json.execution.url }}"
                     ),
-                    "additionalFields": {"appendAttribution": False},
+                    "additionalFields": {"appendAttribution": False, "parse_mode": ""},
                 },
                 "id": notify_id,
                 "name": "Notify Pietro of Error",

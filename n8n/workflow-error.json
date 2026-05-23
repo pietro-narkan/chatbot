@@ -3,7 +3,7 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "2bda5669-b117-4382-988f-c7347786a27c",
+      "id": "9f107c5f-c1e4-43ca-bf92-76d555c22d5c",
       "name": "Error Trigger",
       "type": "n8n-nodes-base.errorTrigger",
       "typeVersion": 1,
@@ -17,10 +17,11 @@
         "chatId": "8216883671",
         "text": "=⚠️ Error en Chatbot NeoKodex\n\nWorkflow: {{ $json.workflow.name }}\nNodo que falló: {{ $json.execution.error.node.name || 'desconocido' }}\nMensaje: {{ $json.execution.error.message }}\nExecution ID: {{ $json.execution.id }}\n\nRevisa en n8n: {{ $json.execution.url }}",
         "additionalFields": {
-          "appendAttribution": false
+          "appendAttribution": false,
+          "parse_mode": ""
         }
       },
-      "id": "8dc37628-7a26-4ab3-a529-10ca00288ff9",
+      "id": "a1938227-cc09-40ac-b524-8c2a3effda27",
       "name": "Notify Pietro of Error",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
