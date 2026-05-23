@@ -100,7 +100,7 @@ def build_escalar_workflow() -> dict:
                         "Resumen:\n{{ $json.resumen }}\n\n"
                         "Abrir chat: tg://user?id={{ $json.user_id }}"
                     ),
-                    "additionalFields": {},
+                    "additionalFields": {"appendAttribution": False},
                 },
                 "id": notify_id,
                 "name": "Notify Pietro",
@@ -144,7 +144,7 @@ def build_main_workflow(system_message: str) -> dict:
             {
                 "parameters": {
                     "updates": ["message"],
-                    "additionalFields": {},
+                    "additionalFields": {"appendAttribution": False},
                 },
                 "id": trigger_id,
                 "name": "Telegram Trigger",
@@ -337,7 +337,7 @@ def build_error_workflow() -> dict:
                         "Execution ID: {{ $json.execution.id }}\n\n"
                         "Revisa en n8n: {{ $json.execution.url }}"
                     ),
-                    "additionalFields": {},
+                    "additionalFields": {"appendAttribution": False},
                 },
                 "id": notify_id,
                 "name": "Notify Pietro of Error",
