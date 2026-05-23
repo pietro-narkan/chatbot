@@ -3,7 +3,7 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "6fb64dd7-5d1d-42d4-a2d1-db9512cd94ed",
+      "id": "ff25fda5-851e-4cd8-a86a-510780d85f03",
       "name": "Error Trigger",
       "type": "n8n-nodes-base.errorTrigger",
       "typeVersion": 1,
@@ -20,7 +20,7 @@
           "appendAttribution": false
         }
       },
-      "id": "01c4bba2-06c2-46d8-a8c5-29778a133da7",
+      "id": "086cddb7-cd64-42eb-8ba0-b2aa54dbadce",
       "name": "Notify Pietro of Error",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,

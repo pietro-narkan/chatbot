@@ -65,9 +65,11 @@ def new_id() -> str:
 
 
 def build_escalar_workflow() -> dict:
-    """Sub-workflow: recibe los params de la tool y notifica a Pietro."""
+    """Sub-workflow: recibe los params de la tool, notifica a Pietro, y
+    devuelve un OK explícito para que el AI Agent no piense que falló."""
     trigger_id = new_id()
     notify_id = new_id()
+    ok_id = new_id()
 
     return {
         "name": "Tool - Escalar a Humano",
@@ -95,10 +97,10 @@ def build_escalar_workflow() -> dict:
                     "chatId": PIETRO_CHAT_ID,
                     "text": (
                         "=🚨 Escalación de lead en NeoKodexBot\n\n"
-                        "Usuario: @{{ $json.username }} (id: {{ $json.user_id }})\n"
-                        "Motivo: {{ $json.motivo }}\n\n"
-                        "Resumen:\n{{ $json.resumen }}\n\n"
-                        "Abrir chat: tg://user?id={{ $json.user_id }}"
+                        "Usuario: @{{ $('When Executed by Another Workflow').item.json.username }} (id: {{ $('When Executed by Another Workflow').item.json.user_id }})\n"
+                        "Motivo: {{ $('When Executed by Another Workflow').item.json.motivo }}\n\n"
+                        "Resumen:\n{{ $('When Executed by Another Workflow').item.json.resumen }}\n\n"
+                        "Abrir chat: tg://user?id={{ $('When Executed by Another Workflow').item.json.user_id }}"
                     ),
                     "additionalFields": {"appendAttribution": False},
                 },
@@ -114,13 +116,30 @@ def build_escalar_workflow() -> dict:
                     }
                 },
             },
+            {
+                "parameters": {
+                    "mode": "raw",
+                    "jsonOutput": '{"status": "ok", "message": "Notificación enviada a Pietro. NO vuelvas a llamar esta tool."}',
+                    "options": {},
+                },
+                "id": ok_id,
+                "name": "Return OK",
+                "type": "n8n-nodes-base.set",
+                "typeVersion": 3.4,
+                "position": [880, 300],
+            },
         ],
         "connections": {
             "When Executed by Another Workflow": {
                 "main": [
                     [{"node": "Notify Pietro", "type": "main", "index": 0}]
                 ]
-            }
+            },
+            "Notify Pietro": {
+                "main": [
+                    [{"node": "Return OK", "type": "main", "index": 0}]
+                ]
+            },
         },
         "active": False,
         "settings": {"executionOrder": "v1"},
@@ -165,6 +184,7 @@ def build_main_workflow(system_message: str) -> dict:
                     "text": "={{ $json.message.text || '(mensaje sin texto)' }}",
                     "options": {
                         "systemMessage": system_message,
+                        "maxIterations": 3,
                     },
                 },
                 "id": agent_id,

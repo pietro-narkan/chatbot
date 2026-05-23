@@ -28,7 +28,7 @@
           ]
         }
       },
-      "id": "d1fdbd2a-0a02-4f48-bb84-6ed345ee6c67",
+      "id": "5e47bfd8-144d-456c-8f8b-0402c428ea92",
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
@@ -40,12 +40,12 @@
     {
       "parameters": {
         "chatId": "8216883671",
-        "text": "=🚨 Escalación de lead en NeoKodexBot\n\nUsuario: @{{ $json.username }} (id: {{ $json.user_id }})\nMotivo: {{ $json.motivo }}\n\nResumen:\n{{ $json.resumen }}\n\nAbrir chat: tg://user?id={{ $json.user_id }}",
+        "text": "=🚨 Escalación de lead en NeoKodexBot\n\nUsuario: @{{ $('When Executed by Another Workflow').item.json.username }} (id: {{ $('When Executed by Another Workflow').item.json.user_id }})\nMotivo: {{ $('When Executed by Another Workflow').item.json.motivo }}\n\nResumen:\n{{ $('When Executed by Another Workflow').item.json.resumen }}\n\nAbrir chat: tg://user?id={{ $('When Executed by Another Workflow').item.json.user_id }}",
         "additionalFields": {
           "appendAttribution": false
         }
       },
-      "id": "9e5e31c5-d4ae-4065-9f24-32761ef8f6b6",
+      "id": "2e2687f9-2db7-495d-9bfb-94cad6972bd4",
       "name": "Notify Pietro",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
@@ -59,6 +59,21 @@
           "name": "NeoKodex Bot"
         }
       }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\"status\": \"ok\", \"message\": \"Notificación enviada a Pietro. NO vuelvas a llamar esta tool.\"}",
+        "options": {}
+      },
+      "id": "72c0d737-89a1-4057-9fa5-8fec11436758",
+      "name": "Return OK",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        880,
+        300
+      ]
     }
   ],
   "connections": {
@@ -67,6 +82,17 @@
         [
           {
             "node": "Notify Pietro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Pietro": {
+      "main": [
+        [
+          {
+            "node": "Return OK",
             "type": "main",
             "index": 0
           }
