@@ -96,13 +96,14 @@ def build_escalar_workflow() -> dict:
                 "parameters": {
                     "chatId": PIETRO_CHAT_ID,
                     "text": (
-                        "=🚨 Escalación de lead en NeoKodexBot\n\n"
-                        "Usuario: @{{ $('When Executed by Another Workflow').item.json.username }} (id: {{ $('When Executed by Another Workflow').item.json.user_id }})\n"
-                        "Motivo: {{ $('When Executed by Another Workflow').item.json.motivo }}\n\n"
-                        "Resumen:\n{{ $('When Executed by Another Workflow').item.json.resumen }}\n\n"
-                        "Abrir chat: tg://user?id={{ $('When Executed by Another Workflow').item.json.user_id }}"
+                        "=<b>🚨 Escalacion de lead en NeoKodexBot</b>\n\n"
+                        "<b>Usuario id:</b> {{ $('When Executed by Another Workflow').item.json.user_id }}\n"
+                        "<b>Username:</b> {{ String($('When Executed by Another Workflow').item.json.username).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}\n\n"
+                        "<b>Motivo:</b> {{ String($('When Executed by Another Workflow').item.json.motivo).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}\n\n"
+                        "<b>Resumen:</b>\n{{ String($('When Executed by Another Workflow').item.json.resumen).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}\n\n"
+                        '<a href="tg://user?id={{ $(\'When Executed by Another Workflow\').item.json.user_id }}">Abrir chat con el usuario</a>'
                     ),
-                    "additionalFields": {"appendAttribution": False, "parse_mode": ""},
+                    "additionalFields": {"appendAttribution": False, "parse_mode": "HTML"},
                 },
                 "id": notify_id,
                 "name": "Notify Pietro",
@@ -351,14 +352,14 @@ def build_error_workflow() -> dict:
                 "parameters": {
                     "chatId": PIETRO_CHAT_ID,
                     "text": (
-                        "=⚠️ Error en Chatbot NeoKodex\n\n"
-                        "Workflow: {{ $json.workflow.name }}\n"
-                        "Nodo que falló: {{ $json.execution.error.node.name || 'desconocido' }}\n"
-                        "Mensaje: {{ $json.execution.error.message }}\n"
-                        "Execution ID: {{ $json.execution.id }}\n\n"
-                        "Revisa en n8n: {{ $json.execution.url }}"
+                        "=<b>⚠️ Error en Chatbot NeoKodex</b>\n\n"
+                        "<b>Workflow:</b> {{ String($json.workflow.name).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}\n"
+                        "<b>Nodo:</b> {{ String($json.execution.error.node.name || 'desconocido').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}\n"
+                        "<b>Mensaje:</b> {{ String($json.execution.error.message).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}\n"
+                        "<b>Execution:</b> {{ $json.execution.id }}\n\n"
+                        '<a href="{{ $json.execution.url }}">Revisar en n8n</a>'
                     ),
-                    "additionalFields": {"appendAttribution": False, "parse_mode": ""},
+                    "additionalFields": {"appendAttribution": False, "parse_mode": "HTML"},
                 },
                 "id": notify_id,
                 "name": "Notify Pietro of Error",

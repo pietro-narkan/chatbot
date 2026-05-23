@@ -3,7 +3,7 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "9f107c5f-c1e4-43ca-bf92-76d555c22d5c",
+      "id": "cff3da9d-ec54-41d8-85da-f5bb02f3918a",
       "name": "Error Trigger",
       "type": "n8n-nodes-base.errorTrigger",
       "typeVersion": 1,
@@ -15,13 +15,13 @@
     {
       "parameters": {
         "chatId": "8216883671",
-        "text": "=⚠️ Error en Chatbot NeoKodex\n\nWorkflow: {{ $json.workflow.name }}\nNodo que falló: {{ $json.execution.error.node.name || 'desconocido' }}\nMensaje: {{ $json.execution.error.message }}\nExecution ID: {{ $json.execution.id }}\n\nRevisa en n8n: {{ $json.execution.url }}",
+        "text": "=<b>⚠️ Error en Chatbot NeoKodex</b>\n\n<b>Workflow:</b> {{ String($json.workflow.name).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}\n<b>Nodo:</b> {{ String($json.execution.error.node.name || 'desconocido').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}\n<b>Mensaje:</b> {{ String($json.execution.error.message).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}\n<b>Execution:</b> {{ $json.execution.id }}\n\n<a href=\"{{ $json.execution.url }}\">Revisar en n8n</a>",
         "additionalFields": {
           "appendAttribution": false,
-          "parse_mode": ""
+          "parse_mode": "HTML"
         }
       },
-      "id": "a1938227-cc09-40ac-b524-8c2a3effda27",
+      "id": "7377b906-f400-419a-aa74-4e561a364197",
       "name": "Notify Pietro of Error",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,

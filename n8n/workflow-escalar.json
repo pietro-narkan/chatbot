@@ -28,7 +28,7 @@
           ]
         }
       },
-      "id": "8f5d07b8-a7aa-4f62-8f42-525e4993f5a3",
+      "id": "b21011d0-21ef-402b-81a7-c7b23e1c725e",
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
@@ -40,13 +40,13 @@
     {
       "parameters": {
         "chatId": "8216883671",
-        "text": "=🚨 Escalación de lead en NeoKodexBot\n\nUsuario: @{{ $('When Executed by Another Workflow').item.json.username }} (id: {{ $('When Executed by Another Workflow').item.json.user_id }})\nMotivo: {{ $('When Executed by Another Workflow').item.json.motivo }}\n\nResumen:\n{{ $('When Executed by Another Workflow').item.json.resumen }}\n\nAbrir chat: tg://user?id={{ $('When Executed by Another Workflow').item.json.user_id }}",
+        "text": "=<b>🚨 Escalacion de lead en NeoKodexBot</b>\n\n<b>Usuario id:</b> {{ $('When Executed by Another Workflow').item.json.user_id }}\n<b>Username:</b> {{ String($('When Executed by Another Workflow').item.json.username).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}\n\n<b>Motivo:</b> {{ String($('When Executed by Another Workflow').item.json.motivo).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}\n\n<b>Resumen:</b>\n{{ String($('When Executed by Another Workflow').item.json.resumen).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }}\n\n<a href=\"tg://user?id={{ $('When Executed by Another Workflow').item.json.user_id }}\">Abrir chat con el usuario</a>",
         "additionalFields": {
           "appendAttribution": false,
-          "parse_mode": ""
+          "parse_mode": "HTML"
         }
       },
-      "id": "70a277d1-5bfd-421a-bc09-c692b80badf2",
+      "id": "671c2be9-8987-4b5e-bdfa-0aef09755996",
       "name": "Notify Pietro",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
@@ -67,7 +67,7 @@
         "jsonOutput": "{\"status\": \"ok\", \"message\": \"Notificación enviada a Pietro. NO vuelvas a llamar esta tool.\"}",
         "options": {}
       },
-      "id": "4c5965e5-7274-4f5c-b607-657089f5da2d",
+      "id": "40c177dc-8220-48b6-b920-492b97f867c7",
       "name": "Return OK",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
